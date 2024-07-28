@@ -12,6 +12,7 @@ public class Test extends OpMode {
         telemetry.addData("Hardware","Initialized");
         telemetry.update();
         lb = hardwareMap.get(DcMotor.class,"lb");
+        //1+1 = 2
     }
 
     @Override
