@@ -1,28 +1,23 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Dictionary;
+import java.util.Map;
+import java.util.Set;
 
 
 public class Movement extends OpMode {
-    //lf rf lb rb
-    public enum Direction {
-        FORWARD(new int[]{1,1,1,1}),
-        BACKWARD(new int[]{-1,-1,-1,-1}),
-        LEFT(new int[]{-1,1,1,-1}),
-        RIGHT(new int[]{1,-1,-1,1});
 
 
-        private int[] dir;
-        Direction(int[] dir){
-            this.dir = dir;
-        }
 
-    };
 
 
     DcMotor lf;
@@ -33,6 +28,7 @@ public class Movement extends OpMode {
     Gamepad pad;
 
     DcMotor[] motors = new DcMotor[4];
+
 
     @Override
     public void init() {
@@ -45,15 +41,26 @@ public class Movement extends OpMode {
 
     @Override
     public void loop() {
-        float speedCorrection = (float)Math.sqrt(Math.pow(gamepad1.left_stick_x,2) + Math.pow(gamepad1.left_stick_y,2));
-        //-> normalize : 대각선 이동시 이동 속도 조절
-        move(Direction.FORWARD,gamepad1.left_stick_y / speedCorrection);
-        move(Direction.RIGHT,gamepad1.left_stick_x / speedCorrection);
+        move(0.7f,0.3f);
     }
 
-    public void move(Direction direction, float speed){
-        for(int i = 0; i < 4; i++){
-            motors[i].setPower(direction.dir[i] * speed);
+    public void move(float moveSpeed, float rotateSpeed){
+
+        if(moveSpeed + rotateSpeed > 1){
+            //power 최대치 = 1, 1이상 구동 X, 따라서 최고 속도가 1 초과시 최고 속도를 1로 조정
+            float moveTemp, rotateTemp;
+            moveTemp = moveSpeed /(moveSpeed + rotateSpeed);
+            rotateTemp = rotateSpeed / (moveSpeed + rotateSpeed);
+            moveSpeed = moveTemp;
+            rotateSpeed = rotateTemp;
         }
+        float x =gamepad1.left_stick_x * moveSpeed;
+        float y =-gamepad1.left_stick_y * moveSpeed;
+        float r =gamepad1.right_stick_x * rotateSpeed;
+        lf.setPower(x + y + r);
+        rf.setPower(y - x - r);
+        lb.setPower(y - x + r);
+        rb.setPower(x + y - r);
     }
+
 }
