@@ -11,6 +11,7 @@ public class AutoMovement extends LinearOpMode {
 
     public List<MoveDir> memory = new ArrayList<MoveDir>();
 
+
     DcMotor lf;
     DcMotor rf;
     DcMotor lb;
@@ -32,25 +33,28 @@ public class AutoMovement extends LinearOpMode {
         }
     }
 
-    void move(MoveDir dir){
-        for(int i = 0; i < 4; i++){
-            motors[i].setPower(dir.dir[i]);
-        }
-        memory.add(dir);
-    }
     void move(MoveDir dir, boolean isRecord){
-        for(int i = 0; i < 4; i++){
-            motors[i].setPower(dir.dir[i]);
+        float spd = 1;//이동 속도
+        if(dir == MoveDir.rR || dir == MoveDir.rL) {
+            spd = 0.5f;//회전 속도
         }
         if(isRecord){
             memory.add(dir);
         }
+        for(int i = 0; i < 4; i++){
+            motors[i].setPower(dir.dir[i] * spd);
+        }
     }
+    void move(MoveDir dir){
+        move(dir,false);
+    }
+
+
 
     void reverse(){
         if(memory.isEmpty()) return;
         MoveDir dir = memory.remove(memory.size() - 1);
-        move(dir,false);
+        move(dir);
     }
     void reverseAll() {
         while(!memory.isEmpty()){

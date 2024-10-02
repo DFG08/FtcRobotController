@@ -50,6 +50,8 @@ public class Movement extends OpMode {
         }
         if(gamepad1.right_stick_x == 0){
             mSpd = 1;
+        }else if(gamepad1.left_stick_x == 0 && gamepad1.left_stick_y == 0){
+            rSpd = 0.5f;
         }
 
         float x = gamepad1.left_stick_x * mSpd;
