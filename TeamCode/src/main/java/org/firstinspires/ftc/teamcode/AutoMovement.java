@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import java.util.ArrayList;
 import java.util.List;
 
-@Autonomous(name = "AutoMovement")
 public class AutoMovement  {
 
     public List<MoveDir> memory = new ArrayList<MoveDir>();
