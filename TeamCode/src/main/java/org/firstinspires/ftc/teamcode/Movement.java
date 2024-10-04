@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -14,7 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class Movement extends OpMode {
+public class Movement {
     DcMotor lf;
     DcMotor rf;
     DcMotor lb;
@@ -23,7 +26,6 @@ public class Movement extends OpMode {
 
 
 
-    @Override
     public void init() {
         lf = hardwareMap.get(DcMotor.class,"lf");
         rf = hardwareMap.get(DcMotor.class,"rf");
@@ -33,10 +35,6 @@ public class Movement extends OpMode {
 
     }
 
-    @Override
-    public void loop() {
-        move(7,3);
-    }
 
     public void move(float mSpd, float rSpd){
 

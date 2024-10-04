@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Autonomous(name = "AutoMovement")
-public class AutoMovement extends LinearOpMode {
+public class AutoMovement  {
 
     public List<MoveDir> memory = new ArrayList<MoveDir>();
 
@@ -18,19 +20,13 @@ public class AutoMovement extends LinearOpMode {
     DcMotor rb;
     DcMotor[] motors = new DcMotor[4];
 
-    @Override
-    public void runOpMode() {
-        waitForStart();
-        if (opModeIsActive()) {
-            lf = hardwareMap.get(DcMotor.class,"lf");
-            rf = hardwareMap.get(DcMotor.class,"rf");
-            lb = hardwareMap.get(DcMotor.class,"lb");
-            rb = hardwareMap.get(DcMotor.class,"rb");
-            motors = new DcMotor[]{lf,rf,lb,rb};
-            while (opModeIsActive()) {
+    public void init() {
+        lf = hardwareMap.get(DcMotor.class,"lf");
+        rf = hardwareMap.get(DcMotor.class,"rf");
+        lb = hardwareMap.get(DcMotor.class,"lb");
+        rb = hardwareMap.get(DcMotor.class,"rb");
+        motors = new DcMotor[]{lf,rf,lb,rb};
 
-            }
-        }
     }
 
     void move(MoveDir dir, boolean isRecord){
