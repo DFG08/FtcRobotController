@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AutoMovement  {
 
-    public List<MoveDir> memory = new ArrayList<MoveDir>();
+    public List<AutoDir> memory = new ArrayList<AutoDir>();
 
 
     DcMotor lf;
@@ -28,19 +28,19 @@ public class AutoMovement  {
 
     }
 
-    void move(MoveDir dir, boolean isRecord){
+    void move(AutoDir dir, boolean isRecord){
         float spd = 1;//이동 속도
-        if(dir == MoveDir.rR || dir == MoveDir.rL) {
+        if(dir.direction == MoveDir.rR || dir.direction == MoveDir.rL) {
             spd = 0.5f;//회전 속도
         }
         if(isRecord){
             memory.add(dir);
         }
         for(int i = 0; i < 4; i++){
-            motors[i].setPower(dir.dir[i] * spd);
+            motors[i].setPower(dir.direction.dir[i] * spd);
         }
     }
-    void move(MoveDir dir){
+    void move(AutoDir dir){
         move(dir,false);
     }
 
@@ -48,7 +48,7 @@ public class AutoMovement  {
 
     void reverse(){
         if(memory.isEmpty()) return;
-        MoveDir dir = memory.remove(memory.size() - 1);
+        AutoDir dir = memory.remove(memory.size() - 1);
         move(dir);
     }
     void reverseAll() {
