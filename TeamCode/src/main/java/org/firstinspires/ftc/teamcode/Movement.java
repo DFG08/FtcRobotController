@@ -1,10 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -23,17 +19,19 @@ public class Movement {
     DcMotor lb;
     DcMotor rb;
     DcMotor[] motors = new DcMotor[4];
+    Gamepad gamepad1;
 
-
-
-    public void init() {
-        lf = hardwareMap.get(DcMotor.class,"lf");
-        rf = hardwareMap.get(DcMotor.class,"rf");
-        lb = hardwareMap.get(DcMotor.class,"lb");
-        rb = hardwareMap.get(DcMotor.class,"rb");
+    public Movement(DcMotor lf, DcMotor rf, DcMotor lb, DcMotor rb, Gamepad pad){
+        this.lf = lf;
+        this.rf = rf;
+        this.lb = lb;
+        this.rb = rb;
         motors = new DcMotor[]{lf,rf,lb,rb};
-
+        this.gamepad1 = pad;
     }
+
+
+
 
 
     public void move(float mSpd, float rSpd){
@@ -56,9 +54,9 @@ public class Movement {
         float y = -gamepad1.left_stick_y * mSpd;
         float r = gamepad1.right_stick_x * rSpd;
         lf.setPower(x + y + r);
-        rf.setPower(y - x - r);
+        rf.setPower(-(y - x - r));
         lb.setPower(y - x + r);
-        rb.setPower(x + y - r);
+        rb.setPower(-(x + y - r));
     }
 
 }
